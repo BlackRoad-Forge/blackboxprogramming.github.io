@@ -1,0 +1,27 @@
+{
+  "name": "blackboxprogramming",
+  "version": "1.0.0",
+  "description": "BlackRoad OS Stripe integration — backend for Raspberry Pi, frontend on GitHub Pages",
+  "private": true,
+  "scripts": {
+    "server": "node server/index.js",
+    "server:dev": "node --watch server/index.js",
+    "test": "npx playwright test",
+    "test:e2e": "npx playwright test tests/stripe.e2e.spec.js",
+    "test:unit": "node tests/stripe.unit.test.js",
+    "deploy:pi": "bash deploy/setup-pi.sh"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "stripe": "^14.14.0",
+    "cors": "^2.8.5",
+    "helmet": "^7.1.0",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.42.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

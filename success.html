@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Successful — Blackbox Programming</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #000;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+    }
+    .container { max-width: 520px; }
+    .icon { font-size: 72px; margin-bottom: 24px; }
+    h1 { font-size: 36px; font-weight: 800; margin-bottom: 12px; }
+    .subtitle { font-size: 17px; color: rgba(255,255,255,0.5); margin-bottom: 32px; line-height: 1.6; }
+    .details {
+      background: #141414;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 32px;
+      text-align: left;
+    }
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      font-size: 14px;
+    }
+    .detail-label { color: rgba(255,255,255,0.4); }
+    .detail-value { color: #fff; font-weight: 600; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      background: #37474F;
+      color: #fff;
+      transition: all 0.2s ease;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 40px #37474F70; }
+    .loading { color: rgba(255,255,255,0.4); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="icon">✅</div>
+    <h1>Payment Successful</h1>
+    <p class="subtitle" id="subtitle">Loading your payment details...</p>
+    <div class="details" id="details" style="display:none;"></div>
+    <a href="/" class="btn">Back to Home</a>
+  </div>
+  <script>
+    const API_BASE = window.BLACKROAD_API || 'https://api.blackroad.io';
+
+    async function loadSession() {
+      const params = new URLSearchParams(window.location.search);
+      const sessionId = params.get('session_id');
+
+      if (!sessionId) {
+        document.getElementById('subtitle').textContent = 'Thank you for your purchase!';
+        return;
+      }
+
+      try {
+        const res = await fetch(`${API_BASE}/api/session/${encodeURIComponent(sessionId)}`);
+        if (!res.ok) throw new Error('Could not load session');
+        const data = await res.json();
+
+        document.getElementById('subtitle').textContent = 'Thank you for your purchase! Here are your details:';
+        const details = document.getElementById('details');
+        details.style.display = 'block';
+        details.innerHTML = `
+          <div class="detail-row"><span class="detail-label">Status</span><span class="detail-value">${data.status}</span></div>
+          <div class="detail-row"><span class="detail-label">Email</span><span class="detail-value">${data.customerEmail || 'N/A'}</span></div>
+          <div class="detail-row"><span class="detail-label">Amount</span><span class="detail-value">$${(data.amountTotal / 100).toFixed(2)} ${data.currency?.toUpperCase()}</span></div>
+        `;
+      } catch (err) {
+        console.log('Could not load session details:', err.message);
+        document.getElementById('subtitle').textContent = 'Thank you for your purchase!';
+      }
+    }
+
+    loadSession();
+  </script>
+</body>
+</html>
