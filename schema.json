@@ -1,0 +1,21 @@
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "BlackRoad OS",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Linux (Raspberry Pi OS)",
+  "description": "Distributed AI operating system running on Raspberry Pi edge hardware. 5 nodes, 52 TOPS AI inference, WireGuard mesh, Cloudflare edge.",
+  "url": "https://blackroad.io",
+  "author": {
+    "@type": "Organization",
+    "name": "BlackRoad OS, Inc.",
+    "url": "https://blackroadinc.us"
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "softwareRequirements": "Raspberry Pi 5, Hailo-8 AI accelerator",
+  "keywords": "distributed ai, edge computing, raspberry pi, ollama, machine learning, self-hosted, homelab, wireguard, cloudflare"
+}
