@@ -1,7 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://blackroad.io/sitemap.xml
-
-# BlackRoad OS — Distributed AI Operating System
-# https://github.com/blackboxprogramming
